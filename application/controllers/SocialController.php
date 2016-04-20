@@ -43,8 +43,6 @@ class SocialController extends Zend_Controller_Action
         $config = Zend_Controller_Front::getInstance()->getParam('bootstrap');
         
         $this->_custom = $config->getOption('custom');
-        // Pegando array de configurações para a criação do menu
-        $this->view->menu = $config->getOption('menu');
         
         $this->_FlashMessenger = $this->_helper->getHelper('FlashMessenger');
         
