@@ -1,0 +1,32 @@
+<script>
+	(function($){
+		$(document).ready(function(){
+			$('#salvar').click(function(e){
+				e.preventDefault();
+				$('form').eq(0).submit();
+			});
+
+			$('#fechar').click(function(e){
+				e.preventDefault();
+				if($('form').eq(0).length != 0){
+					$('form').eq(0).attr('action', '<?= $this->baseUrl() . '/'. $this->controllerName ?>/unlock').submit();	
+				}else{
+					window.location.href = '<?= $this->baseUrl() . '/'. $this->controllerName ?>';
+				}				
+			});
+
+			$("input[type=submit]").eq(0).hide();
+		});
+	})(jQuery);
+</script>
+<div class="navbar navbar-default">
+	<div class="container">
+		<div class="navbar-brand">
+			<?= $this->barTitle; ?>
+		</div>
+		<div class="navbar-right" >
+			<a href="#" id="salvar" class="btn btn-info navbar-btn" > <i class='glyphicon glyphicon-ok' ></i> Salvar</a>
+			<a href="#" id="fechar" class="btn btn-primary navbar-btn" ><i class='glyphicon glyphicon-remove'></i> Fechar</a>
+		</div>
+	</div>
+</div>

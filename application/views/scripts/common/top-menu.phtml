@@ -1,0 +1,28 @@
+<?= $this->render('common/functions-php/menu_helper.php'); ?>
+<div class="navbar navbar-default navbar-custom">
+	<div class="container">
+		<div class="navbar-brand">
+			<i>Olá, <?= $this->user->nome; ?></i> 
+		</div>	
+		<div class="navbar-brand">
+			|
+		</div>	
+		<ul class="nav navbar-nav">
+		
+			<?php echo getMenu(
+			    $this->controllerName, 
+			    $this->actionName, 
+			    $this->user->menus,
+			    $this->baseUrl()
+		    ); ?>
+    		
+      	</ul>
+		<div class="navbar-right" >
+			<a title="Editar perfil" href="<?= $this->baseUrl() ?>/administradores/user" id="edit-user" class="btn btn-link navbar-btn">
+				<i class="glyphicon glyphicon-user" ></i>
+			</a>  <a title="Sair" class="btn btn-link navbar-btn" href="<?= $this->baseUrl() ?>/login/logout">
+				<i class="glyphicon glyphicon-log-out" ></i>
+			</a>	
+		</div>
+	</div>
+</div>

@@ -1,0 +1,103 @@
+<?php 
+/**
+ * class add-option: Recebe 2 tipo de data 
+ * (data-input, nome do input que sera digitado a nova opção ) 
+ * (data-select, nome do select que receberar a nova opçao )
+ * class remove-option: Recebe 2 tipo de data
+ * (data-input, nome do input que sera digitado opção que sera removida )
+ * (data-select, nome do select que sera removido a opção )
+ */
+?>
+
+<script>
+
+	$(".add-option").click(function(e){
+		e.preventDefault();
+		
+		var input = $('input[name='+ $(this).data('input') +']'),
+			select = $('select[name='+ $(this).data('select') +']');
+
+		if(input.hasClass('hide')){
+			input.removeClass('hide');
+			input.removeAttr('disabled');
+			input.focus();	
+		}else if(input.val() != ''){
+						
+			var formData = new FormData();
+				formData.append('action', $(this).data('input').trim());
+				formData.append('nome', input.val().trim());
+
+				$.ajax({
+					type : 'POST',
+					url : '<?= $this->baseUrl() . '/index/add-option' ?>',
+					data: formData,
+					processData: false,
+					contentType: false
+				}).success(function(data){
+					var data = JSON.parse(data);
+					if(data.info){
+						bootbox.alert(data.info);
+						return;
+					}
+
+					if(data.success){
+						select.append('<option value="'+ input.val() +'" selected="selected" >'+ input.val() +'</option>');
+						input.addClass('hide');
+						input.attr({'disabled':'disabled'});
+						input.val('');
+					}
+					
+				});
+		}
+		
+	});
+
+	$(".remove-option").click(function(e){
+		e.preventDefault();
+		
+		var input = $('input[name='+ $(this).data('input') +']'),
+			select = $('select[name='+ $(this).data('select') +']'),
+			self = $(this);
+			
+		bootbox.confirm('Remover a opção: '+ select.val() +' ?', function(result){
+			
+			if(result){
+				
+				var formData = new FormData();
+				formData.append('action', self.data('input').trim());
+				formData.append('nome', select.val().trim());
+
+				$.ajax({
+					type : 'POST',
+					url : '<?= $this->baseUrl() . '/index/remove-option' ?>',
+					data: formData,
+					processData: false,
+					contentType: false
+				}).success(function(data){
+					var data = JSON.parse(data);
+					if(data.info){
+						bootbox.alert(data.info);
+						return;
+					}
+
+					if(data.success){
+						select.children('[value="'+ select.val() +'"]').remove();
+						input.addClass('hide');
+						input.attr({'disabled':'disabled'});
+						input.val('');
+						bootbox.alert(data.success);						
+					}
+					
+				});
+			}		
+		});
+		
+	});
+							
+
+	$('form').submit(function(e){		
+		$('.change-option').addClass('hide');
+		$('.change-option').attr({'disabled':'disabled'});
+	});
+
+</script>

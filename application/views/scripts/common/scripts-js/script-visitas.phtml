@@ -1,0 +1,72 @@
+<script>
+
+	var send = true;
+
+	$('#usuario').on('keyup', function(){
+		var val = $(this).val(),
+			searchResult = $('#searchResult');		
+
+		if(val == ''){
+			searchResult.slideUp();
+			return false;
+		}
+
+    	searchResult.children().remove();
+    	searchResult.append('<li id="noclick" ><i class="glyphicon glyphicon-refresh" ></i> Pesquisando...</li>');    	
+    	
+		if(val.length >= 4 && send){			
+			var formdata = new FormData();
+				formdata.append('like', val);
+				send = false;
+
+			$.ajax({
+				type : 'POST',
+				url : '<?= $this->baseUrl() . '/usuarios/get-usuarios' ?>',
+				data: formdata,
+				processData: false,
+				contentType: false
+			}).success(function(data){
+				searchResult.children().remove();
+				var data = JSON.parse(data);				
+				if(data != false){										
+					var count = data.length;					
+					for(var i=0; i < count; i++){
+						searchResult.append('<li id="'+ data[i].id +'" >'+ data[i].nome +'</li>');
+					}
+				}else{
+					searchResult.children().remove();
+					searchResult.append('<li id="noclick" ><i class="glyphicon glyphicon-info-sign" ></i> Nenhum resultado encontrado...</li>');	
+				}
+
+			}).fail(function(data,textStatus){
+				searchResult.children().remove();
+				searchResult.append('<li id="noclick" >Problemas ao tentar completar a requisição...</li>');
+
+			}).done(function(){
+				send = true;
+			});							
+		}
+		
+		searchResult.slideDown();
+	});
+
+	$('body').on('click', '#searchResult li', function(){
+		var id = $(this).attr('id');
+		
+		if(id != 'noclick'){
+			$(this).parent().slideUp();
+			$('#usuario').val($(this).text());
+			$('#id_usuario').val($(this).attr('id'));
+		}
+		
+	});
+
+	$('#id_responsavel option').click(function(event) {
+		$("#responsavel").val($(this).text());
+	});
+
+	if($('#id_responsavel').children('option:selected').val() != '0'){
+		$("#responsavel").val($('#id_responsavel').children('option:selected').text());	
+	}	
+
+</script>

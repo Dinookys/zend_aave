@@ -1,0 +1,48 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="pt-br" >
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+	<?= $this->headTitle(); ?>
+	<link rel="stylesheet" href="<?php echo $this->baseUrl() . "/"; ?>css/bootstrap.min.css">	
+	<link rel="stylesheet" href="<?php echo $this->baseUrl() . "/"; ?>css/bootstrap-theme.min.css">	
+	<link rel="stylesheet" href="<?php echo $this->baseUrl() . "/"; ?>css/bootstrap-datetimepicker.min.css">
+	<link rel="stylesheet" href="<?php echo $this->baseUrl() . "/"; ?>css/app.min.css">
+	<script src="<?= $this->baseUrl() . "/"; ?>js/moment.min.js" ></script>
+	<script src="<?= $this->baseUrl() . "/"; ?>js/locale/pt-br.js" ></script>
+	<script src="<?= $this->baseUrl() . "/"; ?>js/jquery.min.js" ></script>
+	<script src="<?= $this->baseUrl() . "/"; ?>js/bootstrap.min.js" ></script>
+	<script src="<?= $this->baseUrl() . "/"; ?>js/bootstrap-datetimepicker.min.js" ></script>	
+	<script src="<?= $this->baseUrl() . "/"; ?>js/bootbox.min.js" ></script>
+	<script src="<?= $this->baseUrl() . "/"; ?>js/cidades-estados-1.4-utf8.js" ></script>
+</head>
+<body>	
+	<?= $this->render('common/top-menu.phtml'); ?>
+	<div id="box-content" >
+		<?= $this->layout()->content; ?>
+	</div>	
+    <div class="navbar navbar-fixed-bottom navbar-custom-footer">
+    	<div class="text-center container" >
+    		<img style="width: 120px; margin-top: 5px; " alt="" src="<?= $this->baseUrl() . '/images/logo.gif' ?>">
+    		<a id="go-top" href="#" title="Voltar ao topo" class="navbar-btn btn-lg pull-right">
+    			<i class="glyphicon glyphicon-chevron-up"></i>
+    		</a>
+    	</div>    	
+    </div>
+	<script>
+
+		$("input[id^=data").datetimepicker({
+			format: 'DD/MM/YYYY'
+		});	
+
+		$("#go-top").click(function(e){
+
+			e.preventDefault();
+			
+			$('body,html').animate({
+				scrollTop : 0
+			}, 500);
+		});
+
+	</script>
+</body>	
+</html>

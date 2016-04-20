@@ -1,0 +1,42 @@
+<?php echo "\n"?>
+<script>
+	(function($){
+		$(document).ready(function(){
+    		$('#submit').on('click', function(e){
+    			e.preventDefault();
+    			$('input[name=search]').val($("#search").val());
+    			$('input[name=data-in]').val($("#data-in").val());
+    			$('input[name=data-out]').val($("#data-out").val());			
+    			$('input[name=state]').val($("#state").val());			
+    			$('form').submit();
+    		});
+		});
+	})(jQuery);
+</script>
+<div class="navbar navbar-default">
+	<div class="container">
+		<div class="navbar-brand">
+			<?= $this->barTitle; ?>
+		</div>
+		<div class="navbar-left navbar-form">
+			<div class="form-group">			
+				<input id="search" class="form-control" placeholder="Pesquisar"  value="<?= isset($this->data['search']) ? $this->data['search'] : '' ?>" >
+			</div>
+			<div class="form-group">			
+				<input id="data-in" class="form-control" placeholder="Data inicial"  value="<?= isset($this->data['data-in']) ? $this->data['data-in'] : '' ?>" >
+			</div>
+			<div class="form-group">				
+				<input id="data-out"  class="form-control" placeholder="Data final"  value="<?= isset($this->data['data-out']) ? $this->data['data-out'] : '' ?>"  >
+			</div>
+			<div class="form-group">				
+				<select id="state" title="Estado dos itens"  class="form-control">
+					<option value="1">Ativo</option>
+					<option value="3" <?= isset($this->data['state']) && $this->data['state'] == 3 ? 'selected="selected"' : '' ?> >Arquivado</option>
+				</select>
+			</div>
+		</div>
+		<div class="navbar-right" >			
+			<a href="#" id="submit" class="btn btn-primary navbar-btn" ><i class='glyphicon glyphicon-search'></i> Pesquisar</a>
+		</div>
+	</div>
+</div>

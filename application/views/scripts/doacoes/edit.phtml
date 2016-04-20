@@ -1,0 +1,14 @@
+
+<?= $this->render('common/top-bar-edit.phtml'); ?>
+<div class="container">	
+	<?= $this->render('common/message.phtml'); ?>		
+	<?= $this->form; ?>
+</div>
+<?= $this->render('common/scripts-js/script-visitas.phtml'); ?>
+<?= $this->render('common/scripts-js/script-manage-options.phtml'); ?>
+<script type="text/javascript" src="<?php echo $this->baseUrl(); ?>/js/helper.js" ></script>		
+<script type="text/javascript" >
+	$('#valor').on('keyup', function(){
+		$(this).val(currency_br($(this).val()));
+	});
+</script>

@@ -1,0 +1,60 @@
+
+<?= $this->render('common/top-bar-list.phtml'); ?>
+<div class="container">
+<div class="row">
+<?= $this->render('common/message.phtml'); ?>
+</div>
+</div>
+<div class="container panel panel-default">	
+<form name="psicologico-list" id="psicologico" action="" method="post">
+		<table class="table table-condensed table-hover table-striped">
+			<thead>
+				<tr>
+					<th>
+						<input type="checkbox" id="checkAll" title="Seleciona todos os itens">
+					</th>
+					<th>Usuário AAVE</th>
+					<th>Descrição</th>
+					<th>Data</th>
+					<th>Criado por</th>									
+				</tr>
+			</thead>
+			<tbody>	
+				<?php foreach ($this->paginator as $key => $data) : ?>
+				<tr>
+					<td><input class="checkbox" id="<?= $data['id']; ?>" type="checkbox"
+						name="<?= $data['id']; ?>"></td>
+					<td>
+						<a href="<?= $this->baseUrl() .'/'. $this->controllerName ?>/edit/id/<?= $data['id'] ?>">
+							<?= $data['usuario']; ?>
+						</a>
+					</td>
+					<td>
+						<?= $data['descricao']; ?>						
+					</td>
+					<td>
+						<?= $data['data']; ?>
+					</td>
+					<td>
+						<?= $this->modelAdmin->selectNameById($data['created_user_id']); ?>						
+					</td>
+				</tr>
+				<?php endforeach; ?>
+		</tbody>
+		</table>
+		<input type="hidden" name="search" value="<?= isset($this->data['search']) ? $this->data['search'] : '' ?>" >		
+	</form>
+	
+	<?php if($this->paginator) : ?>
+    	<?= $this->paginationControl($this->paginator, 'Sliding', 'common/pagination.phtml'); ?>	
+    <?php endif; ?>
+    
+    <?php if($this->paginator->getCurrentItemCount() == 0) : ?>
+    	<div class="alert alert-warning text-center" >Nenhum dado encontrado!</div>
+    <?php endif;?>
+	
+</div>
+
+
+<?php //Pegando o script.js ?>
+<?= $this->render('common/scripts-js/script-bar-list.phtml'); ?>

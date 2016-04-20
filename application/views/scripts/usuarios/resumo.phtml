@@ -1,0 +1,193 @@
+<?= $this->render('common/top-bar-back.phtml'); ?>
+<?php $this->render('common/functions-php/currency.php'); ?>
+<?php $totalDoacoes = 00; ?>
+
+<div class="container print" >
+	<div class="row">
+		<div class="panel panel-default" >		
+			<div class="panel-body">
+				<h3>Histórico de: <?= $this->usuarioAave['nome']; ?>  </h3>	
+				<?php if(is_array($this->lista)) : ?>
+					<h3>Atividades</h3>
+					<ul class="list-group" >			
+					<li class="list-group-item list-group-item-warning" >
+						<div style="width: 48%; display: inline-block;">
+							<b>Nome</b>
+						</div>
+						<div style="width: 48%; display: inline-block;">
+							<b>Data</b>
+						</div>
+					</li>
+					<?php foreach ($this->lista as $key => $item) : ?>
+						<li class="list-group-item" >
+							<div style="width: 48%; display: inline-block;">
+								<?= $item['atividade']; ?>
+							</div>
+							<div style="width: 48%; display: inline-block;">
+								<?= $item['data']; ?>
+							</div>
+						</li>
+					<?php endforeach; ?>
+					</ul>
+				<?php endif; ?>		
+
+				<?php if(is_array($this->doacoes)) : ?>
+					<h3>Doações</h3>				
+					<ul class="list-group" >			
+						<li class="list-group-item list-group-item-warning" >
+							<div style="width: 36%; display: inline-block;">
+								<b>Descrição</b>
+							</div>
+							<div style="width: 24%; display: inline-block;">
+								<b>Tipo</b>
+							</div>
+							<div style="width: 24%; display: inline-block;">
+								<b>Data</b>
+							</div>
+							<div style="width: 14%; display: inline-block;">
+								<b>Valor</b>
+							</div>
+						</li>
+					<?php foreach ($this->doacoes as $key => $item) : ?>
+						
+						<?php $totalDoacoes += preg_replace('/([^\d])/i','', $item['valor']); ?>
+					
+						<li class="list-group-item" >
+							<div style="width: 36%; display: inline-block;" >
+								<?= $item['descricao']; ?>
+							</div>
+							<div style="width: 24%; display: inline-block;" >
+								<?= $item['tipo']; ?>
+							</div>
+							<div style="width: 24%; display: inline-block;" >
+								<?= $item['data']; ?>
+							</div>
+							<div style="width: 14%; display: inline-block;" >
+								R$ <?= empty($item['valor']) ? '00,00' : $item['valor']; ?>								
+							</div>							
+						</li>
+					<?php endforeach; ?>
+					<li class="list-group-item text-right" style="background: #eee;" >
+						<b>Total:</b> R$ <?php echo currency($totalDoacoes); ?>						
+					</li>
+				</ul>
+				<?php endif; ?>  
+
+				<?php if(is_array($this->juridico)) : ?>
+					<h3>Jurídico</h3>
+					<ul class="list-group" >			
+						<li class="list-group-item list-group-item-warning" >
+							<div style="width: 48%; display: inline-block;">
+								<b>Descrição</b>
+							</div>
+							<div style="width: 48%; display: inline-block;">
+								<b>Data</b>
+							</div>
+						</li>
+					<?php foreach ($this->juridico as $key => $item) : ?>
+						<li class="list-group-item" >
+							<div style="width: 48%; display: inline-block;">
+								<?= $item['descricao']; ?>
+							</div>
+							<div style="width: 48%; display: inline-block;">
+								<?= $item['data']; ?>
+							</div>						 
+						</li>
+					<?php endforeach; ?>
+					</ul>
+				<?php endif; ?>		
+				
+				<?php if(is_array($this->psicologico)) : ?>
+					<h3>Psicológico</h3>
+					<ul class="list-group" >			
+						<li class="list-group-item list-group-item-warning" >
+							<div style="width: 48%; display: inline-block;">
+								<b>Descrição</b>
+							</div>
+							<div style="width: 48%; display: inline-block;">
+								<b>Data</b>
+							</div>
+						</li>
+					<?php foreach ($this->psicologico as $key => $item) : ?>
+						<li class="list-group-item" >
+							<div style="width: 48%; display: inline-block;" >
+								<?= $item['descricao']; ?>
+							</div>
+
+							<div style="width: 48%; display: inline-block;" >
+								<?= $item['data']; ?>
+							</div>
+						</li>
+					<?php endforeach; ?>
+					</ul>
+				<?php endif; ?>		
+
+				<?php if(is_array($this->social)) : ?>				
+					<h3>Social</h3>
+					<ul class="list-group" >		
+						<li class="list-group-item list-group-item-warning" >
+							<div style="width: 24%; display: inline-block;">
+								<b>Descrição</b>
+							</div>
+							<div style="width: 24%; display: inline-block;">
+								<b>Encaminhamento</b>
+							</div>
+							<div style="width: 24%; display: inline-block;">
+								<b>Orgão encaminhado</b>
+							</div>
+							<div style="width: 24%; display: inline-block;">
+								<b>Data</b>
+							</div>
+						</li>
+					<?php foreach ($this->social as $key => $item) : ?>
+						<li class="list-group-item" >
+							<div style="width: 24%; display: inline-block;">
+								<?= $item['observacoes']; ?>
+							</div>
+							<div style="width: 24%; display: inline-block;">
+								<?= $item['encaminhamento']; ?>
+							</div>
+							<div style="width: 24%; display: inline-block;">
+								<?= $item['orgao_encaminhado']; ?>
+							</div>
+							<div style="width: 24%; display: inline-block;">
+								<?= $item['data']; ?>
+							</div>
+						</li>
+					<?php endforeach; ?>
+					</ul>
+				<?php endif; ?>
+				
+				<?php if(is_array($this->visitas)) : ?>
+					<h3>Visitas</h3>				
+					<ul class="list-group" >			
+						<li class="list-group-item list-group-item-warning" >
+							<div style="width: 31%; display: inline-block;">
+								<b>Descrição</b>
+							</div>
+							<div style="width: 31%; display: inline-block;">
+								<b>Visitado por</b>
+							</div>
+							<div style="width: 31%; display: inline-block;">
+								<b>Data</b>
+							</div>
+						</li>
+					<?php foreach ($this->visitas as $key => $item) : ?>
+						<li class="list-group-item" >
+							<div style="width: 31%; display: inline-block;" >
+								<?= $item['observacoes']; ?>
+							</div>
+							<div style="width: 31%; display: inline-block;" >
+								<?= $item['responsavel']; ?>
+							</div>
+							<div style="width: 31%; display: inline-block;" >
+								<?= $item['data']; ?>
+							</div>
+						</li>
+					<?php endforeach; ?>
+				</ul>
+			<?php endif; ?> 
+			</div>			
+		</div>
+	</div>
+</div>

@@ -1,0 +1,57 @@
+<?= $this->render('common/top-bar-rels.phtml'); ?>
+<div class="container">
+<div class="row">
+<?= $this->render('common/message.phtml'); ?>
+</div>
+</div>
+<div class="container panel panel-default">	
+<form name="relatorios-list" id="relatorios" action="" method="post">
+		<table class="table table-condensed table-hover table-striped">
+			<thead>
+				<tr>
+					<th>Visitado</th>
+					<th>Visitante</th>
+					<th>Data</th>
+					<th>Criado por</th>					
+				</tr>
+			</thead>
+			<tbody>	
+				<?php foreach ($this->paginator as $key => $data) : ?>
+				<tr>					
+					<td>
+						<?= $data['usuario']; ?>
+					</td>
+					<td>
+						<?= $data['responsavel']; ?>
+					</td>
+					<td>
+						<?= $data['data']; ?>
+					</td>
+					<td>
+						<?= $this->modelAdmin->selectNameById($data['created_user_id']); ?>						
+					</td>
+				</tr>
+				<?php endforeach; ?>
+		</tbody>
+		</table>
+		<input type="hidden" name="search" value="<?= isset($this->data['search']) ? $this->data['search'] : '' ?>" >
+		<input type="hidden" name="data-in" value="<?= isset($this->data['data-in']) ? $this->data['data-in'] : '' ?>" >
+		<input type="hidden" name="data-out" value="<?= isset($this->data['data-out']) ? $this->data['data-out'] : '' ?>" >
+		<input type="hidden" name="state" value="<?= isset($this->data['state']) ? $this->data['state'] : '' ?>" >		
+	</form>
+	
+	<?php if($this->paginator) : ?>
+    	<?= $this->paginationControl($this->paginator, 'Sliding', 'common/pagination.phtml'); ?>	
+    <?php endif; ?>
+    
+    <?php if($this->paginator->getCurrentItemCount() == 0) : ?>
+    	<div class="alert alert-warning text-center" >Nenhum dado encontrado!</div>
+    <?php endif;?>
+    
+    <div>
+    	<span class="badge">
+    		Total da pesquisa: <?= $this->paginator->getTotalItemCount(); ?>
+    	</span>		    
+    </div>
+	
+</div>
