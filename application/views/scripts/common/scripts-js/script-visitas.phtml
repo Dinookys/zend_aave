@@ -61,8 +61,8 @@
 		
 	});
 
-	$('#id_responsavel option').click(function(event) {
-		$("#responsavel").val($(this).text());
+	$('#id_responsavel').change(function(event) {
+		$("#responsavel").val($(this).children('option:selected').text());
 	});
 
 	if($('#id_responsavel').children('option:selected').val() != '0'){

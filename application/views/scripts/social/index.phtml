@@ -16,6 +16,7 @@
 					<th>Encaminhamento</th>
 					<th>Orgão Encaminhado</th>
 					<th>Data</th>
+					<th style="width: 30%" >Relato</th>
 					<th>Criado por</th>					
 				</tr>
 			</thead>
@@ -37,6 +38,9 @@
 					</td>
 					<td>
 						<?= $data['data']; ?>
+					</td>
+					<td>
+						<?= $data['observacoes']; ?>
 					</td>
 					<td>
 						<?= $this->modelAdmin->selectNameById($data['created_user_id']); ?>						

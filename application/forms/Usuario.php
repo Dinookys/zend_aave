@@ -9,6 +9,13 @@ class Application_Form_Usuario extends Zend_Form
         $required = new Zend_Validate_NotEmpty ();
         $required->setType ($required->getType() | Zend_Validate_NotEmpty::INTEGER | Zend_Validate_NotEmpty::ZERO);
         
+        $optionsSexo = array(
+            '' => '--- Selecione uma opção ---',
+            'Masculino' => 'Masculino',
+            'Feminino' => 'Feminino',
+            'Transgênero' => 'Transgênero'
+        );
+        
         $this->addElement('radio','situacao',array(
             'label' => 'Situação:',
             'label_class' => 'radio-inline',
@@ -94,11 +101,7 @@ class Application_Form_Usuario extends Zend_Form
             'filters'   =>  array('StringTrim'),
             'class'     => 'form-control',
             'decorators' => $this->setColSize(4),
-            'multiOptions' => array(
-                '' => '--- Selecione uma opção ---',
-                'Masculino' => 'Masculino',
-                'Feminino' => 'Feminino'
-            )
+            'multiOptions' => $optionsSexo
         ));
         
         $this->addElement('select','estado_civil',array(
@@ -238,7 +241,7 @@ class Application_Form_Usuario extends Zend_Form
         ));
 
         $this->addElement('select','prontuario',array(
-            'label'  =>  'Prontuário HDT',
+            'label'  =>  'Prontuário',
             'required'  =>  false,
             'filters'   =>  array('StringTrim'),
             'class'     => 'form-control',
@@ -287,7 +290,8 @@ class Application_Form_Usuario extends Zend_Form
         $this->addElement('radio','visitas',array(
             'label' => 'Receber Visitas?:',
             'label_class' => 'radio-inline',
-            'required' => true,            
+            'required' => true,
+            'value' => 'Não',
             'decorators' => $this->setColSize(12),
             'multiOptions' => array(
                 'Sim' => 'Sim',

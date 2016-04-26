@@ -92,24 +92,15 @@ class ListaController extends Zend_Controller_Action
         if($request->isPost()){
             $data = $request->getPost();
              
-            if($form->isValid($data)){
-                
-                $consta = $this->_model->_exist($data['id_usuario'], $data['id_atividade']);
-                
-                if($consta){
-                    $this->view->messages = array('Usuário já está participando da atividade');
-                    $this->view->message_type = 'alert-info';
-                    
-                }else{                     
-                    $insert = $this->_model->insert($data);                     
-                    if($insert){
-                        $this->_FlashMessenger->setNamespace($this->_controllerName)->addMessage('Item adicionada com sucesso!');
-                        $this->redirect('/' . $this->_controllerName);
-                    }else{
-                        $this->view->messages = array('Problemas ao tentar adicionar item. Tente novamente');
-                        $this->view->message_type = 'alert-warning';
-                    }                    
-                }
+            if($form->isValid($data)){                
+                $insert = $this->_model->insert($data);                     
+                if($insert){
+                    $this->_FlashMessenger->setNamespace($this->_controllerName)->addMessage('Item adicionada com sucesso!');
+                    $this->redirect('/' . $this->_controllerName);
+                }else{
+                    $this->view->messages = array('Problemas ao tentar adicionar item. Tente novamente');
+                    $this->view->message_type = 'alert-warning';
+                }   
             }else{
                 $this->view->messages = array('Alguns campos não foram preenchidos, por favor verifique!');
                 $this->view->message_type = 'alert-warning';
@@ -132,23 +123,14 @@ class ListaController extends Zend_Controller_Action
         if($request->isPost()){
             $data = $request->getPost();
              
-            if($form->isValid($data)){
-                
-                $consta = $this->_model->_exist($data['id_usuario'], $data['id_atividade']);
-                
-                if($consta['id'] != $data['id']){
-                    $this->view->messages = array('Usuário já está participando da atividade');
+            if($form->isValid($data)){                
+                $update = $this->_model->update($data);                    
+                if($update){
+                    $this->view->messages = array('Atualizado com sucesso!');
+                    $this->view->message_type = 'alert-success';
+                }else{
+                    $this->view->messages = array('Sem alterações');
                     $this->view->message_type = 'alert-info';
-                
-                }else{                    
-                    $update = $this->_model->update($data);                    
-                    if($update){
-                        $this->view->messages = array('Atualizado com sucesso!');
-                        $this->view->message_type = 'alert-success';
-                    }else{
-                        $this->view->messages = array('Sem alterações');
-                        $this->view->message_type = 'alert-info';
-                    }
                 }
             }else{
                 $this->view->messages = array('Alguns campos não foram preenchidos, por favor verifique!');

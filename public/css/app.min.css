@@ -5,6 +5,10 @@
   border-radius: 0 !important;
 }
 
+.container{
+  width: 95%;
+}
+
 .underline{
   border-bottom: 1px solid;
   padding-left: 5px;

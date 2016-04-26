@@ -93,12 +93,10 @@ class UsuariosController extends Zend_Controller_Action
             $data = $request->getPost();            
             if($form->isValid($data)){
                 
-                $data['cpf'] = preg_replace('/([^\d]*)/i', "", $data['cpf']);                
-                
-                $exist = $this->_model->getByCPF($data['cpf']);
+                $data['cpf'] = preg_replace('/([^\d]*)/i', "", $data['cpf']);
+                $exist = $this->_model->getByCPF($data['cpf'], false);
                  
-                if(!$exist){
-                    
+                if(!$exist){                    
                     $insert = $this->_model->insert($data);                
                     if($insert){
                         $this->view->messages = $this->_FlashMessenger->setNamespace($this->_controllerName)->addMessage('Cadastro realizado com sucesso!');
@@ -107,10 +105,9 @@ class UsuariosController extends Zend_Controller_Action
                     }else{
                         $this->view->messages = array('Falha ao efetuar cadastrado');
                         $this->view->message_type = 'alert-warning';
-                    }
-                
+                    }                
                 }else{
-                    $this->view->messages = array('CPF já cadastrado');
+                    $this->view->messages = array('CPF já cadastrado para: <a href="'. $this->view->baseUrl() .'/' . $this->_controllerName . '/edit/id/' . $exist['id'].'" >'. $exist['nome'] .'</a>');
                     $this->view->message_type = 'alert-warning';
                 }                
             }else{
@@ -139,7 +136,7 @@ class UsuariosController extends Zend_Controller_Action
                 $data['cpf'] = preg_replace('/([^\d]*)/i', "", $data['cpf']);
                 $exist = $this->_model->getByCPF($data['cpf'], false);  
                 
-                if($exist && $exist['id'] == $data['id']){                    
+                if($exist && $exist['id'] == $data['id'] OR empty($exist)){                    
                 
                     $update =  $this->_model->update($data);                    
                     if($update){
@@ -148,7 +145,7 @@ class UsuariosController extends Zend_Controller_Action
                     }
                     
                 }else{
-                    $this->view->messages = array('CPF já cadastrado');
+                    $this->view->messages = array('CPF já cadastrado para: <a href="'. $this->view->baseUrl() .'/' . $this->_controllerName . '/edit/id/' . $exist['id'].'" >'. $exist['nome'] .'</a>');
                     $this->view->message_type = 'alert-warning';
                 }
                 
