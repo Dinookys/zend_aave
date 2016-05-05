@@ -59,19 +59,25 @@ class AtividadesController extends Zend_Controller_Action
 
     public function indexAction()
     {
-        $request = $this->_request;        
+        $request = $this->_request;  
+        $session = new Zend_Session_Namespace();
         
         $like = NULL;
         
         if ($request->isPost()) {
             $data = $request->getPost();
-            $like = $data['search'];
-            $this->view->data = $data;
-        }
+            $session->__set($this->_controllerName, $data);            
+        }        
         
-        $filter = $request->getParam('filter');
+        $filter = $request->getParam('filter');        
         if($filter == ""){
             $filter = 1;
+        }
+        
+        if($session->getNamespace($this->_controllerName)){
+            $data = $session->__get($this->_controllerName);
+            $this->view->data = $data;
+            $like = $data['search'];
         }
         
         $select = $this->_model->selectAll($filter, $like);

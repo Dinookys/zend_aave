@@ -235,7 +235,8 @@ class Application_Form_Usuario extends Zend_Form
             'multiOptions' => array(
                 '' => '--- Selecione uma opção ---',
                 'Propria' => 'Propria',
-                'Alugada' => 'Alugada'
+                'Alugada' => 'Alugada',
+                'Cedida'  => 'Cedida'
             ),
             'decorators' => $this->setColSize(4)
         ));

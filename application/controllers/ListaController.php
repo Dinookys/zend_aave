@@ -59,19 +59,25 @@ class ListaController extends Zend_Controller_Action
 
     public function indexAction()
     {
-        $request = $this->_request;        
+        $request = $this->_request;
+        $session = new Zend_Session_Namespace();
         
         $like = NULL;
         
         if ($request->isPost()) {
             $data = $request->getPost();
-            $like = $data['search'];
-            $this->view->data = $data;
-        }
+            $session->__set($this->_controllerName, $data);            
+        }        
         
         $filter = $request->getParam('filter');
         if($filter == ""){
             $filter = 1;
+        }
+        
+        if($session->getNamespace($this->_controllerName)){
+            $data = $session->__get($this->_controllerName);
+            $this->view->data = $data;
+            $like = $data['search'];
         }
         
         $select = $this->_model->selectAll($filter, $like);
@@ -270,14 +276,14 @@ class ListaController extends Zend_Controller_Action
     public function relatoriosAction()
     {
         $request = $this->_request;
+        $session = new Zend_Session_Namespace();
         
         $like = NULL;
         $data = NULL;
         
         if ($request->isPost()) {
             $data = $request->getPost();
-            $like = $data['search'];
-            $this->view->data = $data;
+            $session->__set($this->_controllerName, $data);            
         }
         
         $filter = $request->getParam('filter');
@@ -285,11 +291,18 @@ class ListaController extends Zend_Controller_Action
             $filter = 1;
         }
         
+        if($session->getNamespace($this->_controllerName)){
+            $data = $session->__get($this->_controllerName);
+            $this->view->data = $data;
+            $like = $data['search'];
+        }
+        
         $select = $this->_model->getRel($data, $like);
         
         $paginator = new Zend_Paginator(new Zend_Paginator_Adapter_DbSelect($select));
         $paginator->setItemCountPerPage($this->_custom['itemCountPerPage'])
         ->setCurrentPageNumber($this->_getParam('page',1));
+        
         
         $this->view->paginator = $paginator;
         $this->view->barTitle = 'Relatório Atividades';
