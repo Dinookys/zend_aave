@@ -75,7 +75,7 @@ class VisitasController extends Zend_Controller_Action
         if($session->getNamespace($this->_controllerName)){
             $data = $session->__get($this->_controllerName);
             $this->view->data = $data;
-            $like = $data['search'];
+            $like = isset($data['search']) ? $data['search'] : NULL;
         }
         
         $select = $this->_model->selectAll($filter, $like);
@@ -288,9 +288,9 @@ class VisitasController extends Zend_Controller_Action
         if($session->getNamespace($this->_controllerName)){
             $data = $session->__get($this->_controllerName);
             $this->view->data = $data;
-            $like = $data['search'];
+            $like = isset($data['search']) ? $data['search'] : NULL;
         }
-        
+
         $select = $this->_model->getRel($data, $like);
         
         $paginator = new Zend_Paginator(new Zend_Paginator_Adapter_DbSelect($select));
@@ -301,22 +301,4 @@ class VisitasController extends Zend_Controller_Action
         $this->view->barTitle = 'Relatório de Visitas';
     }
 
-
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

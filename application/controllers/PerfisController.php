@@ -64,7 +64,7 @@ class PerfisController extends Zend_Controller_Action
         
         if ($request->isPost()) {
             $data = $request->getPost();
-            $like = $data['search'];
+            $like = isset($data['search']) ? $data['search'] : NULL;
             $this->view->data = $data;
         }
         

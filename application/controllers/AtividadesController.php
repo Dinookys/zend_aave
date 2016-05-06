@@ -77,7 +77,7 @@ class AtividadesController extends Zend_Controller_Action
         if($session->getNamespace($this->_controllerName)){
             $data = $session->__get($this->_controllerName);
             $this->view->data = $data;
-            $like = $data['search'];
+            $like = isset($data['search']) ? $data['search'] : NULL;
         }
         
         $select = $this->_model->selectAll($filter, $like);
