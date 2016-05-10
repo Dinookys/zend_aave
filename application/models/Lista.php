@@ -31,6 +31,8 @@ class Application_Model_Lista extends Application_Model_Model
     {
         try {
     
+            $like = trim($like);
+            
             $select = new Zend_Db_Select($this->db);
     
             $select->from(
@@ -46,7 +48,7 @@ class Application_Model_Lista extends Application_Model_Model
     
             $select->where('l.state = ?', $filterState);
     
-            if(!is_null($like)){
+            if(!is_null($like) && !empty($like)){
                 $columns = array('u.nome','a.nome','l.data','a.descricao');
                 $select->where($columns[0] . ' LIKE ?', '%'. $like .'%' );
                 $select->orWhere($columns[1] . ' LIKE ?', '%'. $like .'%' );
@@ -74,6 +76,7 @@ class Application_Model_Lista extends Application_Model_Model
                 array('u' => $this->usuario),
                 array('u.nome')
                 );
+            
             $select->joinLeft(array('l' => $this->name), 'u.id = l.id_usuario');
             $select->joinLeft(
                 array('a' => $this->atividade),
@@ -96,13 +99,14 @@ class Application_Model_Lista extends Application_Model_Model
     
                 $select->where("STR_TO_DATE(l.data,'%d/%m/%Y') <= ?", $data_out);
             }
+            
+            if(isset($data['atividade']) && !empty($data['atividade'])){
+                $select->where('a.id = ?', $data['atividade']);
+            }
     
             if(!is_null($like) && !empty($like)){
-                $columns = array('u.nome','a.nome','l.data','a.descricao');
-                $select->where($columns[0] . ' LIKE ?', '%'. $like .'%' );
-                $select->orWhere($columns[1] . ' LIKE ?', '%'. $like .'%' );
-                $select->orWhere($columns[2] . ' LIKE ?', '%'. $like .'%' );
-                $select->orWhere($columns[3] . ' LIKE ?', '%'. $like .'%' );
+                $columns = array('u.nome');
+                $select->where($columns[0] . ' LIKE ?', '%'. $like .'%' );                
             }
     
     

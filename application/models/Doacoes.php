@@ -26,7 +26,9 @@ class Application_Model_Doacoes extends Application_Model_Model
     public function selectAll($filterState = 1, $like = NULL)
     {
         try {
-    
+     
+            $like = trim($like);
+            
             $select = new Zend_Db_Select($this->db);
     
             $select->from(
@@ -36,12 +38,9 @@ class Application_Model_Doacoes extends Application_Model_Model
     
             $select->where('u.state = ?', $filterState);
     
-            if(!is_null($like)){
-                $columns = array('u.usuario','u.data','u.descricao','u.valor','u.tipo');
-                $select->where($columns[0] . ' LIKE ?', '%'. $like .'%' );
-                $select->orWhere($columns[1] . ' LIKE ?', '%'. $like .'%' );
-                $select->orWhere($columns[2] . ' LIKE ?', '%'. $like .'%' );
-                $select->orWhere($columns[3] . ' LIKE ?', '%'. $like .'%' );
+            if(!is_null($like) && !empty($like)){
+                $columns = array('u.usuario');
+                $select->where($columns[0] . ' LIKE ?', '%'. $like .'%' );                
             }
     
             $select->order('u.id DESC');
@@ -80,13 +79,14 @@ class Application_Model_Doacoes extends Application_Model_Model
     
                 $select->where("STR_TO_DATE(u.data,'%d/%m/%Y') <= ?", $data_out);
             }
+            
+            if(isset($data['tipo']) && !empty($data['tipo'])){
+                $select->where('u.tipo = ?', $data['tipo']);
+            }
     
             if(!is_null($like) && !empty($like)){
-                $columns = array('u.usuario','u.data','u.descricao','u.valor','u.tipo');
-                $select->where($columns[0] . ' LIKE ?', '%'. $like .'%' );
-                $select->orWhere($columns[1] . ' LIKE ?', '%'. $like .'%' );
-                $select->orWhere($columns[2] . ' LIKE ?', '%'. $like .'%' );
-                $select->orWhere($columns[3] . ' LIKE ?', '%'. $like .'%' );
+                $columns = array('u.usuario');
+                $select->where($columns[0] . ' LIKE ?', '%'. $like .'%' );                
             }
     
             $select->order('u.id DESC');

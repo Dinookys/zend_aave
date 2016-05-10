@@ -74,6 +74,11 @@ class Application_Form_Visita extends Zend_Form
             'decorators' => $this->setColSize(2)
         ));
         
+        $this->addElement('hidden', 'state', array(
+            'value' => 1,
+            'decorators' => $this->setColSize()
+        ));
+        
         $this->addElement('hidden', 'responsavel', array(
             'decorators' => $this->setColSize(2)
         ));

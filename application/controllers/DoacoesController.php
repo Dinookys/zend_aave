@@ -279,6 +279,7 @@ class DoacoesController extends Zend_Controller_Action
     {
         $request = $this->_request;  
         $session = new Zend_Session_Namespace();
+        $modelIndex = new Application_Model_Index();
         
         $like = NULL;
         $data = NULL;
@@ -286,11 +287,6 @@ class DoacoesController extends Zend_Controller_Action
         if ($request->isPost()) {
             $data = $request->getPost();
             $session->__set($this->_controllerName, $data);            
-        }        
-        
-        $filter = $request->getParam('filter');        
-        if($filter == ""){
-            $filter = 1;
         }
         
         if($session->getNamespace($this->_controllerName)){
@@ -305,6 +301,7 @@ class DoacoesController extends Zend_Controller_Action
         $paginator->setItemCountPerPage($this->_custom['itemCountPerPage'])
         ->setCurrentPageNumber($this->_getParam('page',1));
         
+        $this->view->tipos = $modelIndex->getOptions('doacao_tipo_option');
         $this->view->paginator = $paginator;
         $this->view->barTitle = 'Relatório de Doações';
     }   

@@ -1,4 +1,4 @@
-<?= $this->render('common/top-bar-rels.phtml'); ?>
+<?= $this->render('common/top-bar-rels-list.phtml'); ?>
 <div class="container">
 <div class="row">
 <?= $this->render('common/message.phtml'); ?>
@@ -37,7 +37,8 @@
 		<input type="hidden" name="search" value="<?= isset($this->data['search']) ? $this->data['search'] : '' ?>" >
 		<input type="hidden" name="data-in" value="<?= isset($this->data['data-in']) ? $this->data['data-in'] : '' ?>" >
 		<input type="hidden" name="data-out" value="<?= isset($this->data['data-out']) ? $this->data['data-out'] : '' ?>" >
-		<input type="hidden" name="state" value="<?= isset($this->data['state']) ? $this->data['state'] : '' ?>" >		
+		<input type="hidden" name="state" value="<?= isset($this->data['state']) ? $this->data['state'] : '' ?>" >
+		<input type="hidden" name="atividade" value="<?= isset($this->data['atividade']) ? $this->data['atividade'] : '' ?>" >		
 	</form>
 	
 	<?php if($this->paginator) : ?>

@@ -278,11 +278,6 @@ class VisitasController extends Zend_Controller_Action
         if ($request->isPost()) {
             $data = $request->getPost();
             $session->__set($this->_controllerName, $data);            
-        }        
-        
-        $filter = $request->getParam('filter');        
-        if($filter == ""){
-            $filter = 1;
         }
         
         if($session->getNamespace($this->_controllerName)){

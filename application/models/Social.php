@@ -26,6 +26,8 @@ class Application_Model_Social extends Application_Model_Model
     public function selectAll($filterState = 1, $like = NULL)
     {
         try {
+            
+            $like = trim($like);
     
             $select = new Zend_Db_Select($this->db);
     
@@ -36,7 +38,7 @@ class Application_Model_Social extends Application_Model_Model
     
             $select->where('u.state = ?', $filterState);
     
-            if(!is_null($like)){
+            if(!is_null($like) && !empty($like)){
                 $columns = array('u.usuario','u.data','u.encaminhamento','u.orgao_encaminhado');
                 $select->where($columns[0] . ' LIKE ?', '%'. $like .'%' );
                 $select->orWhere($columns[1] . ' LIKE ?', '%'. $like .'%' );

@@ -27,6 +27,8 @@ class Application_Model_Eventos extends Application_Model_Model
     {
         try {
     
+            $like = trim($like);
+            
             $select = new Zend_Db_Select($this->db);
     
             $select->from(
@@ -36,7 +38,7 @@ class Application_Model_Eventos extends Application_Model_Model
     
             $select->where('u.state = ?', $filterState);
     
-            if(!is_null($like)){
+            if(!is_null($like) && !empty($like)){
                 $columns = array('u.nome','u.data_in','u.data_out','u.descricao');
                 $select->where($columns[0] . ' LIKE ?', '%'. $like .'%' );
                 $select->orWhere($columns[1] . ' LIKE ?', '%'. $like .'%' );

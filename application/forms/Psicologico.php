@@ -54,7 +54,12 @@ class Application_Form_Psicologico extends Zend_Form
         $this->addElement('hidden', 'id_usuario', array(
             'decorators' => $this->setColSize(12)
         ));
-
+        
+        $this->addElement('hidden', 'state', array(
+            'value' => 1,
+            'decorators' => $this->setColSize()
+        ));
+        
         $this->addElement('hidden', 'created_user_id', array(
             'value' => CURRENT_USER_ID,
             'decorators' => $this->setColSize(12)
